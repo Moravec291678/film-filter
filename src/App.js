@@ -4,6 +4,7 @@ import Movies from "./components/Movies";
 import "./components/Movies.css";
 
 const App = () => {
+
   // výchozí kategorie – první z listu
   const [typeOfMovie, setTypeOfMovie] = useState(
     Array.isArray(categories) && categories.length ? categories[0] : "komedie"
