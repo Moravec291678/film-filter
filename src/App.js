@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import categories from "./categories";
+import Movies from "./components/Movies";
+import "./components/Movies.css";
 
-function App() {
+const App = () => {
+  // výchozí kategorie – první z listu
+  const [typeOfMovie, setTypeOfMovie] = useState(
+    Array.isArray(categories) && categories.length ? categories[0] : "komedie"
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <section className="section">
+        <h2 className="section__title">Kategorie</h2>
+        <div className="filters">
+          {(Array.isArray(categories) && categories.length
+            ? categories
+            : ["komedie", "romantický", "akční"]
+          ).map((cat) => (
+            <button
+              key={cat}
+              className={`chip ${typeOfMovie === cat ? "chip--active" : ""}`}
+              aria-pressed={typeOfMovie === cat}
+              onClick={() => setTypeOfMovie(cat)}
+            >
+              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="section">
+        <h2 className="section__title">Vybráno: {typeOfMovie}</h2>
+        <Movies typeOfMovie={typeOfMovie} />
+      </section>
     </div>
   );
-}
+};
 
 export default App;
